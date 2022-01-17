@@ -19,12 +19,12 @@ class _LocationScreenState extends State<LocationScreen> {
   String getMessage;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     updateUI(widget.locationWeather);
   }
 
-  void updateUI(dynamic weatherData){
+  void updateUI(dynamic weatherData) {
     setState(() {
       if (weatherData == null) {
         temperature = 0;
@@ -42,6 +42,7 @@ class _LocationScreenState extends State<LocationScreen> {
       getMessage = weather.getMessage(temperature);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +65,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       var weatherData = await weather.getLocationWeather();
                       updateUI(weatherData);
                     },
@@ -74,10 +75,18 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder:  (context){
-                        return CityScreen();
-                      }),);
+                    onPressed: () async {
+                      var typedName = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CityScreen();
+                          },
+                        ),
+                      );
+                      if (typedName != null) {
+                        
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
